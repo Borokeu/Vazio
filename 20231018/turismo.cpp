@@ -44,6 +44,12 @@ class Evento{
         Evento(int _duracao){
             this->duracao = _duracao;
         }
+            //testar a classe abstrata com função virtual void imprimir()
+    public:
+        virtual void imprimir()=0;
+            //feito isso, utilizar função nas classes que são herdeiras
+            
+  
 };
 
 class Roteiro : public Evento{
@@ -54,7 +60,12 @@ class Roteiro : public Evento{
             this->titulo = _titulo;
             this->ordem = _ordem;
         }
-
+        void imprimir() override{
+                cout<<"----------Roteiro----------" << endl;
+                cout<<"Titulo: " << this-> titulo << endl;
+                cout<<"Ordem: " << this-> ordem << endl;
+                cout<<"Duracao: " << this-> duracao << endl;
+        }   
 };
 
 class Deslocamento : public Evento{
@@ -65,6 +76,12 @@ class Deslocamento : public Evento{
             this->origem = _origem;
             this->destino = _destino;
         }
+        void imprimir() override{
+                cout<<"----------Deslocamento----------" << endl;
+                cout<<"De: " << this-> origem << endl;
+                cout<<"Para: " << this-> destino << endl;
+                cout<<"Duracao: " << this-> duracao << endl;
+        }
 
 };
 
@@ -74,13 +91,17 @@ class Pernoite : public Evento{
         Pernoite(int _duracao,string _local=""):Evento(_duracao){
             this->local = _local;
         }
+        void imprimir() override{
+                cout<<"----------Pernoite----------" << endl;
+                cout<<"Cabana - " << this-> local << endl;
+                cout<<"Duracao: " << this-> duracao << endl;
+        }
 };
 
 class Pacote{
-    private:
-        vector<Evento*> listaEventos;
     
     public:
+        vector<Evento*> listaEventos;
         Pacote(Evento *_evento){
             listaEventos.push_back(_evento);
         }
@@ -125,7 +146,12 @@ int main(){
     bronze->inserirEvento(d1);
     bronze->inserirEvento(p1);
 
+for(auto el : bronze->listaEventos){
+    cout << endl;
+    el -> imprimir();
+}
+
     Reserva *reserva01 = new Reserva(cli01,bronze);
-    
+
     return 0;
 }
